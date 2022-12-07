@@ -5,6 +5,7 @@ from mangum import Mangum
 from functions.autoplayer_table import autoplayer_table
 from functions.pricetracker_table import pricetracker_table
 from functions.addRewardsFromHash import addRewardsFromHash
+from functions.getAlchemistData import getAlchemistData 
 
 app = FastAPI()
 
@@ -53,5 +54,21 @@ def get_loot(
 
     response.status_code=status.HTTP_200_OK
     return {"loot": user_loot}
+
+@app.get("/dfk/alchemist")
+def get_alchemist(
+    response: Response, 
+    ):
+    alchemist = {}
+    try:
+        pricetracker = pricetracker_table()
+        alchemist = getAlchemistData(pricetracker)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get alchemist data")
+
+    response.status_code=status.HTTP_200_OK
+    return {"alchemist": alchemist}
+
 
 lambda_handler = Mangum(app, lifespan="off")

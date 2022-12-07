@@ -20,6 +20,8 @@ def addRewardsFromHash(hash, user_loot, profession, pricetracker):
     for reward in quest_reward:
         item = Contracts[reward["args"]["reward"]]
         decimals = 0
+
+        #TODO: add date sorting to get the price when the item was obtained
         price_response = pricetracker.query(
             KeyConditionExpression = "item_ = :item",
             ExpressionAttributeValues={
