@@ -1,0 +1,12 @@
+{
+    "Health Vial":{"Ironscale":8, "Rockroot":8, "GaiasTears":5, "DFKGold":300},
+    "Full Health Potion":{"Shimmerscale":2, "Rockroot":10, "Ambertaffy":3, "HealthVial":4, "GaiasTears":20, "DFKGold":3000},
+    "Mana Vial":{"Lanterneye":8, "BlueStem":4, "GaiasTears":5, "DFKGold":300},
+    "Full Mana Potion":{"Lanterneye":5, "Shimmerscale":2, "BlueStem":10, "ManaVial":4, "GaiasTears":20, "DFKGold":3000},
+    "Stamina Vial":{"Shimmerscale":1, "Swift-Thistle":1, "Darkweed":2, "Spiderfruit":2, "Milkweed":2, "GaiasTears":10, "DFKGold":2000},
+    "Anti-Poison Potion":{"Ironscale":2, "Ambertaffy":2, "Spiderfruit":3, "GaiasTears":5, "DFKGold":300},
+    "Anti-blinding Potion":{"Lanterneye":2, "Darkweed":7, "Milkweed":2, "GaiasTears":5, "DFKGold":300},
+    "Magic Resistance Potion":{"Lanterneye":8, "Milkweed":2, "BlueStem":4, "GaiasTears":10, "DFKGold":500},
+    "Toughness Potion":{"Ironscale":8, "Ambertaffy":7, "GaiasTears":10, "DFKGold":500},
+    "Swiftness Potion":{"Sailfish": 2, "Swift-Thistle":2, "MagicResistancePotion":1, "ToughnessPotion":1, "GaiasTears":20, "DFKGold":3000}
+}
