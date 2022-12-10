@@ -34,4 +34,13 @@ def addRewardsFromHash(hash, user_loot, profession, pricetracker):
             user_loot[profession][item] = {"amount": 0, "price": 0}
         user_loot[profession][item]["amount"] += reward["args"]["amount"]/10**decimals
         user_loot[profession][item]["price"] += (reward["args"]["amount"]/10**decimals)*float(price)
-        user_loot["total_price"] += (reward["args"]["amount"]/10**decimals)*float(price)
+        user_loot["total_value"] += (reward["args"]["amount"]/10**decimals)*float(price)
+        if profession == "mining":
+            user_loot["total_value_mining"] += (reward["args"]["amount"]/10**decimals)*float(price)
+        elif profession == "fishing":
+            user_loot["total_value_fishing"] += (reward["args"]["amount"]/10**decimals)*float(price)
+    if profession == "mining":
+        user_loot["mining_txs"]+=1
+    elif profession == "fishing":
+        user_loot["fishing_txs"]+=1
+    user_loot["total_txs"]+=1

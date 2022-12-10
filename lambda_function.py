@@ -28,10 +28,14 @@ def get_loot(
         if not user: raise Exception("Invalid user")
         user_loot = {
             "address": user,
-            "txs":0,
             "fishing":{},
             "mining":{},
-            "total_price":0
+            "total_value":0,
+            "total_value_mining":0,
+            "total_value_fishing":0,
+            "total_txs":0,
+            "mining_txs":0,
+            "fishing_txs":0
         }
         autoplayer = autoplayer_table()
         pricetracker = pricetracker_table()
@@ -46,7 +50,6 @@ def get_loot(
 
         for entry in tx_response["Items"]:
             addRewardsFromHash(entry["hash_"], user_loot, entry["profession_"], pricetracker)
-            user_loot["txs"]+=1
 
     except Exception as e:
         print(e)
