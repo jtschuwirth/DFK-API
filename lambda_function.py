@@ -6,6 +6,7 @@ from functions.autoplayer_table import autoplayer_table
 from functions.pricetracker_table import pricetracker_table
 from functions.addRewardsFromHash import addRewardsFromHash
 from functions.getAlchemistData import getAlchemistData 
+from functions.getStoneCarverData import getStoneCarverData
 
 app = FastAPI()
 
@@ -72,6 +73,22 @@ def get_alchemist(
 
     response.status_code=status.HTTP_200_OK
     return {"alchemist": alchemist}
+
+@app.get("/dfk/stone_carver")
+def get_stone_carver(
+    response: Response, 
+    ):
+    stone_carver = {}
+    try:
+        pricetracker = pricetracker_table()
+        stone_carver = getStoneCarverData(pricetracker)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get stone_carver data")
+
+    response.status_code=status.HTTP_200_OK
+    return {"stone_carver": stone_carver}
+
 
 
 lambda_handler = Mangum(app, lifespan="off")

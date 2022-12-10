@@ -1,0 +1,11 @@
+{
+    "Lesser Chaos Stone": {"DFKGold": 2000, "Gaias Tears": 50, "Mana Vial": 1, "Ambertaffy": 1, "Sailfish":1, "Blue Stem":1, "Shvas Rune":2},
+    "Lesser Might Stone": {"DFKGold": 3600, "Gaias Tears": 50, "Health Vial": 1, "Toughness Potion": 1, "Spiderfruit":3, "Rockroot":8, "Shvas Rune":2},
+    "Lesser Finesse Stone": {"DFKGold": 2000, "Gaias Tears": 50, "Stamina Vial": 1, "Magic Resistance Potion": 1, "Lanterneye": 1, "Swift-Thistle": 1, "Shvas Rune":2 },
+    "Lesser Swiftness Stone": {"DFKGold": 4000, "Gaias Tears": 50, "Mana Vial": 1, "Anti-blinding Potion": 1, "Sailfish": 1, "Swift-Thistle": 2, "Shvas Rune":2},
+    "Lesser Vigor Stone": {"DFKGold": 2000, "Gaias Tears": 50, "Health Vial": 1, "Stamina Vial": 1, "Sailfish": 1, "Rockroot": 4, "Shvas Rune":2},
+    "Lesser Wit Stone": {"DFKGold": 4000, "Gaias Tears": 50, "Anti-Poison Potion": 1, "Anti-blinding Potion": 1, "Shimmerskin": 2, "Darkweed":3, "Shvas Rune":2},
+    "Lesser Insight Stone": {"DFKGold": 4000, "Gaias Tears": 50, "Anti-Poison Potion": 1, "Anti-blinding Potion": 1, "Spiderfruit": 5, "Shimmerskin": 1, "Shvas Rune":2},
+    "Lesser Fortitude Stone": {"DFKGold": 3600, "Gaias Tears": 50, "Health Vial": 1, "Toughness Potion": 1, "Rockroot": 8, "Blue Stem": 6, "Shvas Rune":2},
+    "Lesser Fortune Stone": {"DFKGold": 3600, "Gaias Tears": 50, "Mana Vial": 1, "Magic Resistance Potion": 1, "Sailfish": 2, "Darkweed": 4, "Shvas Rune":2}
+}

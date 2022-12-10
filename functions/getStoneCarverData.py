@@ -1,12 +1,12 @@
 import json
 
-IngredientsJson = open("items_data/Alchemist.json")
+IngredientsJson = open("items_data/StoneCarver.json")
 Ingredients = json.load(IngredientsJson)
 
-def getAlchemistData(pricetracker):
-    alchemist = {}
+def getStoneCarverData(pricetracker):
+    stone_carver = {}
     for recipe in Ingredients:
-        alchemist[recipe] = {
+        stone_carver[recipe] = {
             "fabrication_cost": 0,
             "market_cost": 0,
             "ingredients":{}
@@ -17,7 +17,7 @@ def getAlchemistData(pricetracker):
                 ":item": recipe,
             })
         price = price_response["Items"][0]["price_"]
-        alchemist[recipe]["market_cost"] += float(price)
+        stone_carver[recipe]["market_cost"] += float(price)
 
         for item in Ingredients[recipe]:
             price_response = pricetracker.query(
@@ -27,11 +27,11 @@ def getAlchemistData(pricetracker):
             })
             price = price_response["Items"][0]["price_"]
 
-            alchemist[recipe]["ingredients"][item] = {
+            stone_carver[recipe]["ingredients"][item] = {
                 "quantity":Ingredients[recipe][item],
                 "price": Ingredients[recipe][item]*float(price)
             }
 
-            alchemist[recipe]["fabrication_cost"]+=Ingredients[recipe][item]*float(price)
-    return alchemist
+            stone_carver[recipe]["fabrication_cost"]+=Ingredients[recipe][item]*float(price)
+    return stone_carver
 

@@ -47,7 +47,17 @@
     "Anti-blinding Potion":"0x5986045e7c221c8AD40A736B6434D82E29687aeB",
     "Magic Resistance Potion":"0xFADCb72aAE2713975a890b59FF47231D1A552De3",
     "Toughness Potion":"0x2dfFf745d2c7ddCAD4E97b80DF33705B1a95A172",
-    "Swiftness Potion":"0x84246Ce3988742D46fC00d9b8b2AFb5CDBDaE660"
+    "Swiftness Potion":"0x84246Ce3988742D46fC00d9b8b2AFb5CDBDaE660",
+
+    "Lesser Might Stone": "0xf345b884eA45aEcb3E46CeEaEDB9CE993Ba3615a",
+    "Lesser Finesse Stone": "0xF1D53fa23C562246B9d8EC591eEa12Ec0288a888",
+    "Lesser Swiftness Stone": "0xd37aCbAC3C25a543B30aa16208637cfa6EB97eDd",
+    "Lesser Vigor Stone": "0x63891e0fcfEe0cEB12dE5fb96F43ADf9DbEC20a3",
+    "Lesser Fortitude Stone": "0xf599Ae2c925D3287a7fF64DC1b55C7Ea6EE3AA8f",
+    "Lesser Wit Stone": "0xFC943eBd19112D6c6098412238E4E8319641B3d8",
+    "Lesser Insight Stone": "0x3D112747ff2463802Afa240B62ade8F1cc4a5c7d",
+    "Lesser Fortune Stone": "0x934e3e2a433F37cC2D02855A43fD7Ed475EA7451",
+    "Lesser Chaos Stone": "0x7643ADB5AaF129A424390CB055d6e23231fFd690"
 
 
 }
