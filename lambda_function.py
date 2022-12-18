@@ -2,11 +2,11 @@ from fastapi import FastAPI, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-from functions.autoplayer_table import autoplayer_table
+from functions.heroes_table import heroes_table
 from functions.pricetracker_table import pricetracker_table
 from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
-from functions.questcomparison import questComparison
+from functions.questComparison import questComparison
 
 app = FastAPI()
 
@@ -24,8 +24,8 @@ def get_alchemist(
 ):
     alchemist = {}
     try:
-        pricetracker = pricetracker_table()
-        alchemist = getAlchemistData(pricetracker)
+        table = pricetracker_table()
+        alchemist = getAlchemistData(table)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -41,8 +41,8 @@ def get_stone_carver(
 ):
     stone_carver = {}
     try:
-        pricetracker = pricetracker_table()
-        stone_carver = getStoneCarverData(pricetracker)
+        table = pricetracker_table()
+        stone_carver = getStoneCarverData(table)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -55,11 +55,12 @@ def get_stone_carver(
 @app.get("/dfk/quests")
 def get_quests(
     response: Response,
+    days: int = 30
 ):
     quests={}
     try:
-        pricetracker = pricetracker_table()
-        quests = questComparison(pricetracker, 30)
+        table = pricetracker_table()
+        quests = questComparison(table, days)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -67,6 +68,27 @@ def get_quests(
 
     response.status_code = status.HTTP_200_OK
     return {"quests": quests}
+
+@app.get("/dfk/heroes")
+def get_heroes(
+    response: Response,
+    address: str = ""
+):
+    heroes=[]
+    try:
+        table = heroes_table()
+        heroes = table.scan(
+                FilterExpression= "owner_ = :address",
+                ExpressionAttributeValues={
+                ":address": address,
+            })
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get heroes data")
+
+    response.status_code = status.HTTP_200_OK
+    return {"heroes": heroes["Items"]}
 
 
 lambda_handler = Mangum(app, lifespan="off")
