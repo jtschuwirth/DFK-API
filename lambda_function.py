@@ -7,6 +7,7 @@ from functions.pricetracker_table import pricetracker_table
 from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
 from functions.questComparison import questComparison
+from functions.getHeroes import getHeroes
 
 app = FastAPI()
 
@@ -90,5 +91,87 @@ def get_heroes(
     response.status_code = status.HTTP_200_OK
     return {"heroes": heroes["Items"]}
 
+@app.get("/dfk/stop_questing")
+def stop_questing(
+    response: Response,
+    address: str = "",
+    profession: str = ""
+):
+    heroes=[]
+    try:
+        table = heroes_table()
+        heroes = table.scan(
+                FilterExpression= "owner_ = :address AND profession_ = :profession",
+                ExpressionAttributeValues={
+                ":address": address,
+                ":profession": profession
+            })
+        for hero in heroes["Items"]:
+            table.update_item(
+                Key={'owner_': address, "heroId_": hero["heroId_"]},
+                UpdateExpression = "SET override_ = :override",
+                ExpressionAttributeValues={
+                    ':override': "Not Questing"
+            })
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to stop questing")
+
+    response.status_code = status.HTTP_200_OK
+    return {f"Stop {profession}"}
+
+@app.get("/dfk/resume_questing")
+def resume_questing(
+    response: Response,
+    address: str = "",
+    profession: str = ""
+):
+    heroes=[]
+    try:
+        table = heroes_table()
+        heroes = table.scan(
+                FilterExpression= "owner_ = :address AND profession_ = :profession",
+                ExpressionAttributeValues={
+                ":address": address,
+                ":profession": profession
+            })
+        for hero in heroes["Items"]:
+            table.update_item(
+                Key={'owner_': address, "heroId_": hero["heroId_"]},
+                UpdateExpression = "REMOVE override_"
+            )
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to resume questing")
+
+    response.status_code = status.HTTP_200_OK
+    return {f"Resume {profession}"}
+
+@app.get("/dfk/update_heroes")
+def update_heroes(
+    response: Response,
+    address: str = "",
+):
+    try:
+        table = heroes_table()
+        heroes_in_address = getHeroes(address)
+        for hero in heroes_in_address:
+            table.put_item(Item={
+                "owner_": address,
+                "heroId_": int(hero["id"]),
+                "profession_": hero["profession"]
+
+            })
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to update heroes")
+
+    response.status_code = status.HTTP_200_OK
+    return {f"Updated hero list"}
+
+#Add remove hero endpoint
 
 lambda_handler = Mangum(app, lifespan="off")

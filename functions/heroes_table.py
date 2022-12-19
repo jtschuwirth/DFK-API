@@ -11,4 +11,4 @@ def heroes_table():
             region_name = "us-east-1",
         )
 
-    return my_session.resource('dynamodb').Table("dfk-autoplayer-heroes")
+    return my_session.resource('dynamodb').Table("dfk-autoplayer")
