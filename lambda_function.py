@@ -158,12 +158,15 @@ def update_heroes(
         table = heroes_table()
         heroes_in_address = getHeroes(address)
         for hero in heroes_in_address:
-            table.put_item(Item={
-                "owner_": address,
-                "heroId_": int(hero["id"]),
-                "profession_": hero["profession"]
+            try:
+                table.put_item(Item={
+                    "owner_": address,
+                    "heroId_": int(hero["id"]),
+                    "profession_": hero["profession"]
 
-            })
+                })
+            except:
+                continue
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
