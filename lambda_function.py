@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-from functions.ddb_tables import init_heroes_table, init_pricetracker_table
+from functions.ddb_tables import init_tracking_table
 from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
 from functions.getHeroesByAddress import getHeroes
@@ -23,8 +23,9 @@ def get_alchemist(
 ):
     alchemist = {}
     try:
-        table = init_pricetracker_table()
-        alchemist = getAlchemistData(table)
+        #table = init_pricetracker_table()
+        #alchemist = getAlchemistData(table)
+        pass
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -40,8 +41,9 @@ def get_stone_carver(
 ):
     stone_carver = {}
     try:
-        table = init_pricetracker_table()
-        stone_carver = getStoneCarverData(table)
+        #table = init_pricetracker_table()
+        #stone_carver = getStoneCarverData(table)
+        pass
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -50,26 +52,21 @@ def get_stone_carver(
     response.status_code = status.HTTP_200_OK
     return {"stone_carver": stone_carver}
 
-@app.get("/dfk/heroes")
-def get_heroes(
+@app.get("/dfk/buyer/heroes_bought")
+def get_heroes_bought(
     response: Response,
-    address: str = ""
 ):
-    heroes=[]
+    heroes_bought = []
     try:
-        table = init_heroes_table()
-        heroes = table.scan(
-                FilterExpression= "owner_ = :address",
-                ExpressionAttributeValues={
-                ":address": address,
-            })
+        table = init_tracking_table()
+        heroes_bought = table.scan()["Items"]
     except Exception as e:
         print(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                            detail="Failed to get heroes data")
+                            detail="Failed to get heroes bought")
 
     response.status_code = status.HTTP_200_OK
-    return {"heroes": heroes["Items"]}
+    return {"heroes": heroes_bought}
 
 
 lambda_handler = Mangum(app, lifespan="off")
