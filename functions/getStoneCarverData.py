@@ -16,7 +16,7 @@ def getStoneCarverData(pricetracker):
                 ExpressionAttributeValues={
                 ":item": recipe,
             })
-        price = price_response["Items"][0]["price_"]
+        price = price_response["Items"][-1]["price_"]
         stone_carver[recipe]["market_cost"] += float(price)
 
         for item in Ingredients[recipe]:
@@ -25,7 +25,7 @@ def getStoneCarverData(pricetracker):
                 ExpressionAttributeValues={
                 ":item": item,
             })
-            price = price_response["Items"][0]["price_"]
+            price = price_response["Items"][-1]["price_"]
 
             stone_carver[recipe]["ingredients"][item] = {
                 "quantity":Ingredients[recipe][item],
