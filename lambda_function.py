@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
@@ -6,9 +7,12 @@ from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
 from functions.getHeroesByAddress import getHeroes
 from functions.TablesManager import TablesManager
+from dotenv import load_dotenv
 import logging
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+load_dotenv()
 
 app = FastAPI()
 
@@ -61,7 +65,7 @@ def get_heroes_bought(
 ):
     heroes_bought = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.buyer_tracker
 
         heroes_bought = table.scan()["Items"]
@@ -80,7 +84,7 @@ def get_last_payouts(
 ):
     last_payouts = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.payouts
 
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
@@ -99,7 +103,7 @@ def get_tracking_data(
 ):
     tracking_data = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.profit_tracking
 
         tracking_data = table.scan()["Items"]
@@ -119,7 +123,7 @@ def get_accounts_from_manager(
 ):
     accounts = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.accounts
 
         scan_response = table.scan(
@@ -147,7 +151,7 @@ def get_trading_trades(
 ):
     trades = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.trades
 
         trades = table.scan()["Items"]
