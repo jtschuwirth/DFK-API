@@ -6,6 +6,9 @@ from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
 from functions.getHeroesByAddress import getHeroes
 from functions.TablesManager import TablesManager
+import logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 app = FastAPI()
 
@@ -27,7 +30,7 @@ def get_alchemist(
         #alchemist = getAlchemistData(table)
         pass
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get alchemist data")
 
@@ -45,7 +48,7 @@ def get_stone_carver(
         #stone_carver = getStoneCarverData(table)
         pass
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get stone_carver data")
 
@@ -64,7 +67,7 @@ def get_heroes_bought(
         heroes_bought = table.scan()["Items"]
         heroes_bought.sort(key=lambda x: int(x["time_"]))
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get heroes bought")
 
@@ -83,7 +86,7 @@ def get_last_payouts(
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
         last_payouts.sort(key=lambda x: float(x["amount_"]))
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get last payout")
 
@@ -102,7 +105,7 @@ def get_tracking_data(
         tracking_data = table.scan()["Items"]
         tracking_data.sort(key=lambda x: x["time_"])
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get tracking data")
 
@@ -131,7 +134,7 @@ def get_accounts_from_manager(
                 "enabled": item["enabled_manager"]
                 })
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get accounts")
 
@@ -150,7 +153,7 @@ def get_trading_trades(
         trades = table.scan()["Items"]
         trades.sort(key=lambda x: x["time_"])
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                             detail="Failed to get trades")
 
