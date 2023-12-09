@@ -2,10 +2,10 @@ from fastapi import FastAPI, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-from functions.ddb_tables import init_tracking_table, init_payouts_table, init_profit_tracking_table, init_account_table
 from functions.getAlchemistData import getAlchemistData
 from functions.getStoneCarverData import getStoneCarverData
 from functions.getHeroesByAddress import getHeroes
+from functions.TablesManager import TablesManager
 
 app = FastAPI()
 
@@ -58,7 +58,9 @@ def get_heroes_bought(
 ):
     heroes_bought = []
     try:
-        table = init_tracking_table()
+        tablesManager = TablesManager()
+        table = tablesManager.buyer_tracker
+
         heroes_bought = table.scan()["Items"]
         heroes_bought.sort(key=lambda x: int(x["time_"]))
     except Exception as e:
@@ -75,7 +77,9 @@ def get_last_payouts(
 ):
     last_payouts = []
     try:
-        table = init_payouts_table()
+        tablesManager = TablesManager()
+        table = tablesManager.payouts
+
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
         last_payouts.sort(key=lambda x: float(x["amount_"]))
     except Exception as e:
@@ -92,7 +96,9 @@ def get_tracking_data(
 ):
     tracking_data = []
     try:
-        table = init_profit_tracking_table()
+        tablesManager = TablesManager()
+        table = tablesManager.profit_tracking
+
         tracking_data = table.scan()["Items"]
         tracking_data.sort(key=lambda x: x["time_"])
     except Exception as e:
@@ -110,7 +116,9 @@ def get_accounts_from_manager(
 ):
     accounts = []
     try:
-        table = init_account_table()
+        tablesManager = TablesManager()
+        table = tablesManager.accounts
+
         scan_response = table.scan(
             FilterExpression="pay_to = :pay_to",
             ExpressionAttributeValues={
@@ -129,6 +137,25 @@ def get_accounts_from_manager(
 
     response.status_code = status.HTTP_200_OK
     return accounts
+
+@app.get("/dfk/trader/trades")
+def get_trading_trades(
+    response: Response,
+):
+    trades = []
+    try:
+        tablesManager = TablesManager()
+        table = tablesManager.trades
+
+        trades = table.scan()["Items"]
+        trades.sort(key=lambda x: x["time_"])
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get trades")
+
+    response.status_code = status.HTTP_200_OK
+    return trades
 
 
 lambda_handler = Mangum(app, lifespan="off")
