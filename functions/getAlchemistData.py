@@ -1,6 +1,6 @@
 import json
 
-IngredientsJson = open("items_data/Alchemist.json")
+IngredientsJson = open("data/alchemist.json")
 Ingredients = json.load(IngredientsJson)
 
 def getAlchemistData(pricetracker):

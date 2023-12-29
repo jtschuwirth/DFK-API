@@ -3,10 +3,7 @@ from fastapi import FastAPI, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-from functions.getAlchemistData import getAlchemistData
-from functions.getStoneCarverData import getStoneCarverData
-from functions.getHeroesByAddress import getHeroes
-from functions.TablesManager import TablesManager
+from functions.classes.TablesManager import TablesManager
 from dotenv import load_dotenv
 import logging
 
