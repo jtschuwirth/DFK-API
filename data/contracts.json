@@ -1,9 +1,9 @@
 {
-    "RouterAddress": {
+    "Router": {
         "dfk": "0x3C351E1afdd1b1BC44e931E12D4E05D6125eaeCa",
         "klay": "0x9e987E5E9aB872598f601BE4aCC5ac23F484845E"
     },
-    "BazaarAddress":{
+    "Bazaar":{
         "dfk": "0x902F2b740bC158e16170d57528405d7f2a793Ca2"
     },
     "Heroes": {
