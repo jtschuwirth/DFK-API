@@ -6,6 +6,10 @@ from mangum import Mangum
 from functions.classes.TablesManager import TablesManager
 from dotenv import load_dotenv
 import logging
+from functions.getContract import getContracts
+from functions.getPairs import getPairs
+
+from functions.getTokens import getTokens
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -27,8 +31,6 @@ def get_alchemist(
 ):
     alchemist = {}
     try:
-        #table = init_pricetracker_table()
-        #alchemist = getAlchemistData(table)
         pass
     except Exception as e:
         logger.error(e)
@@ -45,8 +47,6 @@ def get_stone_carver(
 ):
     stone_carver = {}
     try:
-        #table = init_pricetracker_table()
-        #stone_carver = getStoneCarverData(table)
         pass
     except Exception as e:
         logger.error(e)
@@ -62,7 +62,7 @@ def get_heroes_bought(
 ):
     heroes_bought = []
     try:
-        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        tablesManager = TablesManager()
         table = tablesManager.buyer_tracker
 
         heroes_bought = table.scan()["Items"]
@@ -81,7 +81,7 @@ def get_last_payouts(
 ):
     last_payouts = []
     try:
-        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        tablesManager = TablesManager()
         table = tablesManager.payouts
 
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
@@ -100,7 +100,7 @@ def get_tracking_data(
 ):
     tracking_data = []
     try:
-        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        tablesManager = TablesManager()
         table = tablesManager.profit_tracking
 
         tracking_data = table.scan()["Items"]
@@ -120,7 +120,7 @@ def get_accounts_from_manager(
 ):
     accounts = []
     try:
-        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        tablesManager = TablesManager()
         table = tablesManager.accounts
 
         scan_response = table.scan(
@@ -148,7 +148,7 @@ def get_trading_trades(
 ):
     trades = []
     try:
-        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        tablesManager = TablesManager()
         table = tablesManager.trades
 
         trades = table.scan()["Items"]
@@ -160,6 +160,55 @@ def get_trading_trades(
 
     response.status_code = status.HTTP_200_OK
     return trades
+
+@app.get("/dfk/tokens")
+def get_tokens(
+    response: Response,
+    chain: str
+):
+    tokens = {}
+    try:
+        tokens = getTokens(chain)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get tokens")
+
+    response.status_code = status.HTTP_200_OK
+    return tokens
+
+@app.get("/dfk/pairs")
+def get_pairs(
+    response: Response,
+    token: str,
+    chain: str
+):
+    pairs = {}
+    try:
+        pairs = getPairs(token, chain)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get pairs")
+
+    response.status_code = status.HTTP_200_OK
+    return pairs
+
+@app.get("/dfk/contracts")
+def get_contracts(
+    response: Response,
+    chain: str
+):
+    contracts = {}
+    try:
+        contracts = getContracts(chain)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get contracts")
+
+    response.status_code = status.HTTP_200_OK
+    return contracts
 
 
 lambda_handler = Mangum(app, lifespan="off")
