@@ -1,8 +1,9 @@
 import boto3
+from boto3 import Session
 
 class TablesManager:
     def __init__(self, prod) -> None:
-        self.session = boto3.session.Session(
+        self.session: Session = boto3.session.Session(
             region_name = "us-east-1",
         )
 

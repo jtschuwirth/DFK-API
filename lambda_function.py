@@ -101,7 +101,7 @@ def get_tracking_data(
     tracking_data = []
     try:
         tablesManager = TablesManager(os.environ["PROD"] == "true")
-        table = tablesManager.profit_tracker
+        table = tablesManager.autoplayer_tracking
 
         tracking_data = table.scan()["Items"]
         tracking_data.sort(key=lambda x: x["time_"])
