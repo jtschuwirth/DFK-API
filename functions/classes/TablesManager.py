@@ -1,13 +1,15 @@
 import boto3
 
 class TablesManager:
-    def __init__(self) -> None:
+    def __init__(self, prod) -> None:
         self.session = boto3.session.Session(
             region_name = "us-east-1",
         )
 
-        self.accounts = self.session.resource('dynamodb').Table("dfk-autoplayer-accounts")
-        self.accounts_dev = self.session.resource('dynamodb').Table("dfk-autoplayer-accounts-dev")
+        if prod:
+            self.accounts = self.session.resource('dynamodb').Table("dfk-autoplayer-accounts")
+        else:
+            self.accounts = self.session.resource('dynamodb').Table("dfk-autoplayer-accounts-dev")
 
         self.autoplayer = self.session.resource('dynamodb').Table("dfk-autoplayer")
         self.gas = self.session.resource('dynamodb').Table("dfk-autoplayer-gas")
@@ -24,4 +26,3 @@ class TablesManager:
 
 
     
-

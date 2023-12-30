@@ -62,8 +62,8 @@ def get_heroes_bought(
 ):
     heroes_bought = []
     try:
-        tablesManager = TablesManager()
-        table = tablesManager.buyer_tracker
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        table = tablesManager.buyer_tracking
 
         heroes_bought = table.scan()["Items"]
         heroes_bought.sort(key=lambda x: int(x["time_"]))
@@ -81,7 +81,7 @@ def get_last_payouts(
 ):
     last_payouts = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.payouts
 
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
@@ -100,8 +100,8 @@ def get_tracking_data(
 ):
     tracking_data = []
     try:
-        tablesManager = TablesManager()
-        table = tablesManager.profit_tracking
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        table = tablesManager.profit_tracker
 
         tracking_data = table.scan()["Items"]
         tracking_data.sort(key=lambda x: x["time_"])
@@ -120,7 +120,7 @@ def get_accounts_from_manager(
 ):
     accounts = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.accounts
 
         scan_response = table.scan(
@@ -148,7 +148,7 @@ def get_trading_trades(
 ):
     trades = []
     try:
-        tablesManager = TablesManager()
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.trades
 
         trades = table.scan()["Items"]
