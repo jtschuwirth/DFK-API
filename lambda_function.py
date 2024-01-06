@@ -75,16 +75,21 @@ def get_heroes_bought(
     response.status_code = status.HTTP_200_OK
     return heroes_bought
 
-@app.get("/dfk/seller/last_payouts")
+@app.get("/dfk/seller/last_payouts/{manager_address}")
 def get_last_payouts(
     response: Response,
+    manager_address: str
 ):
     last_payouts = []
     try:
         tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.payouts
 
-        last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
+        last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan(
+            FilterExpression="payout_address = :payout_address",
+            ExpressionAttributeValues={
+                ":payout_address": manager_address
+            })["Items"]))
         last_payouts.sort(key=lambda x: float(x["amount_"]))
     except Exception as e:
         logger.error(e)
