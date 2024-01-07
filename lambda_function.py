@@ -75,6 +75,29 @@ def get_heroes_bought(
     response.status_code = status.HTTP_200_OK
     return heroes_bought
 
+@app.get("/dfk/target_accounts/{manager_address}")
+def get_target_accounts(
+    response: Response,
+    manager_address: str
+):
+    target_accounts = []
+    try:
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        table = tablesManager.managers
+
+        target_accounts = table.scan(
+            FilterExpression="address_ = :address_",
+            ExpressionAttributeValues={":address_": manager_address}
+            )["Items"][0]["target_accounts"]
+
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get target accounts")
+
+    response.status_code = status.HTTP_200_OK
+    return target_accounts
+
 @app.get("/dfk/seller/last_payouts/{manager_address}")
 def get_last_payouts(
     response: Response,
