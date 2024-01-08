@@ -56,16 +56,20 @@ def get_stone_carver(
     response.status_code = status.HTTP_200_OK
     return stone_carver
 
-@app.get("/dfk/buyer/heroes_bought")
+@app.get("/dfk/buyer/heroes_bought/{profession}")
 def get_heroes_bought(
     response: Response,
+    profession: str
 ):
     heroes_bought = []
     try:
         tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.buyer_tracking
 
-        heroes_bought = table.scan()["Items"]
+        heroes_bought = table.scan(
+            FilterExpression="profession = :profession",
+            ExpressionAttributeValues={":profession": profession}
+            )["Items"]
         heroes_bought.sort(key=lambda x: int(x["time_"]))
     except Exception as e:
         logger.error(e)
