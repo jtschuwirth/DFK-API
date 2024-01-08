@@ -79,20 +79,27 @@ def get_heroes_bought(
     response.status_code = status.HTTP_200_OK
     return heroes_bought
 
-@app.get("/dfk/target_accounts/{manager_address}")
+@app.get("/dfk/target_accounts/{manager_address}/{profession}")
 def get_target_accounts(
     response: Response,
-    manager_address: str
+    manager_address: str,
+    profession: str
 ):
     target_accounts = []
     try:
         tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.managers
 
-        target_accounts = table.scan(
-            FilterExpression="address_ = :address_",
-            ExpressionAttributeValues={":address_": manager_address}
-            )["Items"][0]["target_accounts"]
+        if profession == "gardening":
+            target_accounts = table.scan(
+                FilterExpression="address_ = :address_",
+                ExpressionAttributeValues={":address_": manager_address}
+                )["Items"][0]["target_accounts_gardening"]
+        elif profession == "mining":
+            target_accounts = table.scan(
+                FilterExpression="address_ = :address_",
+                ExpressionAttributeValues={":address_": manager_address}
+                )["Items"][0]["target_accounts_mining"]
 
     except Exception as e:
         logger.error(e)
