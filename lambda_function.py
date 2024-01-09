@@ -171,6 +171,7 @@ def get_accounts_from_manager(
             accounts.append({
                 "address": item["address_"],
                 "manager": item["pay_to"],
+                "profession": item["profession"] if "profession" in item else "mining",
                 "enabled": item["enabled_manager"]
                 })
     except Exception as e:
