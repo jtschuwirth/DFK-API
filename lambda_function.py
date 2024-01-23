@@ -217,6 +217,22 @@ def get_tokens(
     response.status_code = status.HTTP_200_OK
     return tokens
 
+@app.get("/dfk/tokens/trade")
+def get_tokens(
+    response: Response,
+    chain: str
+):
+    tokens = {}
+    try:
+        tokens = getTokens(chain, True)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get tokens")
+
+    response.status_code = status.HTTP_200_OK
+    return tokens
+
 @app.get("/dfk/pairs")
 def get_pairs(
     response: Response,

@@ -131,7 +131,8 @@
         "dfk": "0xf17FD21bDF6713a1Dfed668b97835b21e32651e8"
     },
     "Stamina Vial": {
-        "dfk": "0x242078edFDca25ef2A497C8D9f256Fd641472E5F"
+        "dfk": "0x242078edFDca25ef2A497C8D9f256Fd641472E5F",
+        "trade": false
     },
     "Anti-Poison Potion": {
         "dfk": "0x449eB718e351a86718A090A1a8Db3FD561306d9b"
