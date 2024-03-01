@@ -118,36 +118,63 @@
     "King Pincer": {
         "dfk": "0x60A3810a3963f23Fa70591435bbe93BF8786E202"
     },
-    "Health Vial": {
+    "Health Vial Crate": {
         "dfk": "0x591853e01EcFDcF1Bdc9f093423C197BfBBd1A4f"
     },
-    "Full Health Potion": {
+    "Full Health Potion Crate": {
         "dfk": "0x5948dd8Df6afEFE05B033AD8f3ae513a9Cd4F1Dc"
     },
-    "Mana Vial": {
+    "Mana Vial Crate": {
         "dfk": "0x240da5314B05E84392e868aC8f2b80ad6becadd4"
     },
-    "Full Mana Potion": {
+    "Full Mana Potion Crate": {
         "dfk": "0xf17FD21bDF6713a1Dfed668b97835b21e32651e8"
+    },
+    "Anti-Poison Potion Crate": {
+        "dfk": "0x449eB718e351a86718A090A1a8Db3FD561306d9b"
+    },
+    "Anti-blinding Potion Crate": {
+        "dfk": "0x5986045e7c221c8AD40A736B6434D82E29687aeB"
+    },
+    "Magic Resistance Potion Crate": {
+        "dfk": "0xFADCb72aAE2713975a890b59FF47231D1A552De3"
+    },
+    "Toughness Potion Crate": {
+        "dfk": "0x2dfFf745d2c7ddCAD4E97b80DF33705B1a95A172"
+    },
+    "Swiftness Potion Crate": {
+        "dfk": "0x84246Ce3988742D46fC00d9b8b2AFb5CDBDaE660"
+    },
+    "Health Vial": {
+        "dfk": "0xc974f3f154FD19C8D03F6dbbA1775129f93c80cb"
+    },
+    "Full Health Potion": {
+        "dfk": "0xA0c2Fbbb3f52bCbCAb2600322a6fBC2653518E00"
+    },
+    "Mana Vial": {
+        "dfk": "0xBb9dEdfD96234315dD4899b438f9C41cD75dFdc6"
+    },
+    "Full Mana Potion": {
+        "dfk": "0x27bdc0f62DA17b13Cb134102dEf58dD9d578Ee10"
     },
     "Stamina Vial": {
         "dfk": "0x242078edFDca25ef2A497C8D9f256Fd641472E5F",
         "trade": false
     },
     "Anti-Poison Potion": {
-        "dfk": "0x449eB718e351a86718A090A1a8Db3FD561306d9b"
+        "dfk": "0x84B252A4930A3656a469c6b360FcBEE991D555Bd"
     },
     "Anti-blinding Potion": {
-        "dfk": "0x5986045e7c221c8AD40A736B6434D82E29687aeB"
+        "dfk": "0xe6Fd594437c4B91e8bd36475977593C98Bf089a4"
     },
     "Magic Resistance Potion": {
-        "dfk": "0xFADCb72aAE2713975a890b59FF47231D1A552De3"
+        "dfk": "0x4ED3e1b8D1212b2839dBB1f0EFA029792d92c90f"
     },
     "Toughness Potion": {
-        "dfk": "0x2dfFf745d2c7ddCAD4E97b80DF33705B1a95A172"
+        "dfk": "0x79d656A96139ED23CDf531d0dC34c000A0979c03"
     },
     "Swiftness Potion": {
-        "dfk": "0x84246Ce3988742D46fC00d9b8b2AFb5CDBDaE660"
+        "dfk": "0x1Ae5c72601AAF4C67C6a6004C4C2788D9EB5510C"
     },
     "Pet Treat": {
         "dfk": "0xAcDa84fAb3d3cdB38078b04901a26c103C37E7F4"
