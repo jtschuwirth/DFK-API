@@ -182,6 +182,33 @@ def get_accounts_from_manager(
     response.status_code = status.HTTP_200_OK
     return accounts
 
+@app.get("/dfk/accounts/{manager_address}/{profession}")
+def get_accounts_from_manager_by_profession(
+    response: Response,
+    manager_address: str,
+    profession: str
+):
+    accounts = []
+    try:
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        table = tablesManager.accounts
+
+        scan_response = table.scan(
+            FilterExpression="pay_to = :pay_to AND profession = :profession",
+            ExpressionAttributeValues={
+                ":pay_to": manager_address,
+                ":profession": profession
+            })
+        for item in scan_response["Items"]:
+            accounts.append(item["address_"])
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get accounts")
+
+    response.status_code = status.HTTP_200_OK
+    return accounts
+
 @app.get("/dfk/trader/trades")
 def get_trading_trades(
     response: Response,
