@@ -133,6 +133,26 @@ def get_last_payouts(
     response.status_code = status.HTTP_200_OK
     return last_payouts
 
+
+@app.get("/dfk/seller/last_fees")
+def get_last_fees(
+    response: Response
+):
+    last_fees = []
+    try:
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        table = tablesManager.fees
+
+        last_fees = list(filter(lambda x: int(x["time_delta"]) != 0, table.scan()["Items"]))
+        last_fees.sort(key=lambda x: float(x["amount_"]))
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get last fees")
+
+    response.status_code = status.HTTP_200_OK
+    return last_fees
+
 @app.get("/dfk/seller/tracking_data")
 def get_tracking_data(
     response: Response,
