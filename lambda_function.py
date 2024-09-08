@@ -120,7 +120,7 @@ def get_last_payouts(
         tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.payouts
 
-        last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0 and int(x["time_"]) < (int(time.time()) - 7*24*60*60), table.scan(
+        last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0 and int(x["time_"]) > (int(time.time()) - 7*24*60*60), table.scan(
             FilterExpression="payout_address = :payout_address",
             ExpressionAttributeValues={
                 ":payout_address": manager_address
@@ -144,7 +144,7 @@ def get_last_fees(
         tablesManager = TablesManager(os.environ["PROD"] == "true")
         table = tablesManager.fees
 
-        last_fees = list(filter(lambda x: int(x["time_delta"]) != 0 and int(x["time_"]) < (int(time.time()) - 7*24*60*60), table.scan()["Items"]))
+        last_fees = list(filter(lambda x: int(x["time_delta"]) != 0 and int(x["time_"]) > (int(time.time()) - 7*24*60*60), table.scan()["Items"]))
         last_fees.sort(key=lambda x: float(x["amount_"]))
     except Exception as e:
         logger.error(e)
