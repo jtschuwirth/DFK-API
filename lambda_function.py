@@ -173,10 +173,10 @@ def get_tracking_data(
     response.status_code = status.HTTP_200_OK
     return tracking_data
 
-@app.get("/dfk/accounts/{manager_address}")
+@app.get("/dfk/accounts/{user_id}")
 def get_accounts_from_manager(
     response: Response,
-    manager_address: str
+    user_id: str
 ):
     accounts = []
     try:
@@ -184,9 +184,9 @@ def get_accounts_from_manager(
         table = tablesManager.accounts
 
         scan_response = table.scan(
-            FilterExpression="pay_to = :pay_to",
+            FilterExpression="manager = :user_id",
             ExpressionAttributeValues={
-                ":pay_to": manager_address
+                ":user_id": user_id
             })
         for item in scan_response["Items"]:
             accounts.append({
