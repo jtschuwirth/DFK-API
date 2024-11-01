@@ -17,7 +17,7 @@ class TablesManager:
         self.history = self.session.resource('dynamodb').Table("dfk-autoplayer-history")
         self.payouts = self.session.resource('dynamodb').Table("dfk-autoplayer-payouts")
         self.fees = self.session.resource('dynamodb').Table("dfk-autoplayer-fee")
-        self.managers = self.session.resource('dynamodb').Table("dfk-autoplayer-managers")
+        self.managers = self.session.resource('dynamodb').Table("autodfk-managers")
 
         self.buyer_tracking = self.session.resource('dynamodb').Table("dfk-buyer-tracking")
         self.autoplayer_tracking = self.session.resource('dynamodb').Table("dfk-autoplayer-tracking")

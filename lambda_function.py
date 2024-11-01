@@ -80,10 +80,10 @@ def get_heroes_bought(
     response.status_code = status.HTTP_200_OK
     return heroes_bought
 
-@app.get("/dfk/target_accounts/{manager_address}/{profession}")
+@app.get("/dfk/target_accounts/{user_id}/{profession}")
 def get_target_accounts(
     response: Response,
-    manager_address: str,
+    user_id: str,
     profession: str
 ):
     target_accounts = []
@@ -93,13 +93,13 @@ def get_target_accounts(
 
         if profession == "gardening":
             target_accounts = table.scan(
-                FilterExpression="address_ = :address_",
-                ExpressionAttributeValues={":address_": manager_address}
+                FilterExpression="user_id = :user_id",
+                ExpressionAttributeValues={":user_id": user_id}
                 )["Items"][0]["target_accounts_gardening"]
         elif profession == "mining":
             target_accounts = table.scan(
-                FilterExpression="address_ = :address_",
-                ExpressionAttributeValues={":address_": manager_address}
+                FilterExpression="user_id = :user_id",
+                ExpressionAttributeValues={":user_id": user_id}
                 )["Items"][0]["target_accounts_mining"]
 
     except Exception as e:
@@ -110,10 +110,10 @@ def get_target_accounts(
     response.status_code = status.HTTP_200_OK
     return target_accounts
 
-@app.get("/dfk/seller/last_payouts/{manager_address}")
+@app.get("/dfk/seller/last_payouts/{user_id}")
 def get_last_payouts(
     response: Response,
-    manager_address: str
+    user_id: str
 ):
     last_payouts = []
     try:
@@ -121,9 +121,9 @@ def get_last_payouts(
         table = tablesManager.payouts
 
         last_payouts = list(filter(lambda x: int(x["time_delta"]) != 0 and int(x["time_"]) > (int(time.time()) - 7*24*60*60), table.scan(
-            FilterExpression="payout_address = :payout_address",
+            FilterExpression="user_id = :user_id",
             ExpressionAttributeValues={
-                ":payout_address": manager_address
+                ":user_id": user_id
             })["Items"]))
         last_payouts.sort(key=lambda x: float(x["amount_"]))
     except Exception as e:
@@ -203,10 +203,10 @@ def get_accounts_from_manager(
     response.status_code = status.HTTP_200_OK
     return accounts
 
-@app.get("/dfk/accounts/{manager_address}/{profession}")
+@app.get("/dfk/accounts/{user_id}/{profession}")
 def get_accounts_from_manager_by_profession(
     response: Response,
-    manager_address: str,
+    user_id: str,
     profession: str
 ):
     accounts = []
@@ -215,9 +215,9 @@ def get_accounts_from_manager_by_profession(
         table = tablesManager.accounts
 
         scan_response = table.scan(
-            FilterExpression="pay_to = :pay_to AND profession = :profession",
+            FilterExpression="manager = :user_id AND profession = :profession",
             ExpressionAttributeValues={
-                ":pay_to": manager_address,
+                ":user_id": user_id,
                 ":profession": profession
             })
         for item in scan_response["Items"]:
