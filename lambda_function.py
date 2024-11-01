@@ -191,7 +191,7 @@ def get_accounts_from_manager(
         for item in scan_response["Items"]:
             accounts.append({
                 "address": item["address_"],
-                "manager": item["pay_to"],
+                "manager": item["manager"],
                 "profession": item["profession"] if "profession" in item else "mining",
                 "enabled": item["enabled_manager"]
                 })
