@@ -171,7 +171,7 @@ def get_tracking_data(
                             detail="Failed to get tracking data")
 
     response.status_code = status.HTTP_200_OK
-    return tracking_data
+    return tracking_data[-168:]
 
 @app.get("/dfk/accounts/{user_id}")
 def get_accounts_from_manager(
