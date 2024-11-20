@@ -26,5 +26,10 @@ class TablesManager:
         self.trades = self.session.resource('dynamodb').Table("dfk-trading-trades")
         self.active_orders = self.session.resource('dynamodb').Table("dfk-trading-active-orders")
 
+        self.mining_stats = self.session.resource('dynamodb').Table("dfk-autoplayer-mining-stats")
+        self.gardening_stats = self.session.resource('dynamodb').Table("dfk-autoplayer-gardening-stats")
+        self.fishing_stats = self.session.resource('dynamodb').Table("dfk-autoplayer-fishing-stats")
+        self.foraging_stats = self.session.resource('dynamodb').Table("dfk-autoplayer-foraging-stats")
+
 
     

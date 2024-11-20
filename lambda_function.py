@@ -173,6 +173,36 @@ def get_tracking_data(
     response.status_code = status.HTTP_200_OK
     return tracking_data[-168:]
 
+@app.get("/dfk/stats/{profession}")
+def get_tracking_data(
+    response: Response,
+    profession: str
+):
+    tracking_data = []
+    try:
+        tablesManager = TablesManager(os.environ["PROD"] == "true")
+        if profession == "gardening":
+            table = tablesManager.gardening_stats
+        elif profession == "mining":
+            table = tablesManager.mining_stats
+        elif profession == "fishing":
+            table = tablesManager.fishing_stats
+        elif profession == "foraging":
+            table = tablesManager.foraging_stats
+        else:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Invalid profession")
+
+        tracking_data = table.scan()["Items"]
+        tracking_data.sort(key=lambda x: x["time_"])
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="Failed to get profession stats")
+
+    response.status_code = status.HTTP_200_OK
+    return tracking_data[-168:]
+
 @app.get("/dfk/accounts/{user_id}")
 def get_accounts_from_manager(
     response: Response,
