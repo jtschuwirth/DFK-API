@@ -222,7 +222,7 @@ def get_accounts_from_manager(
             accounts.append({
                 "address": item["address_"],
                 "manager": item["manager"],
-                "profession": item["profession"] if "profession" in item else "mining",
+                "profession": item["profession"],
                 "enabled": item["enabled_manager"]
                 })
     except Exception as e:
@@ -251,7 +251,12 @@ def get_accounts_from_manager_by_profession(
                 ":profession": profession
             })
         for item in scan_response["Items"]:
-            accounts.append(item["address_"])
+            accounts.append({
+                "address": item["address_"],
+                "manager": item["manager"],
+                "profession": item["profession"],
+                "enabled": item["enabled_manager"]
+                })
     except Exception as e:
         logger.error(e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
