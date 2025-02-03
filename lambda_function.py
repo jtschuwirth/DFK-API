@@ -245,10 +245,11 @@ def get_accounts_from_manager_by_profession(
         table = tablesManager.accounts
 
         scan_response = table.scan(
-            FilterExpression="manager = :user_id AND profession = :profession",
+            FilterExpression="manager = :user_id AND profession = :profession AND disabled <> :disabled",
             ExpressionAttributeValues={
                 ":user_id": user_id,
-                ":profession": profession
+                ":profession": profession,
+                ":disabled": True
             })
         for item in scan_response["Items"]:
             accounts.append({
