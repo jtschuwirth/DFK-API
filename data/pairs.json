@@ -226,7 +226,14 @@
         },
         "Chaos Crystal": {
             "dfk": "0xDA73A2ACe155b3df1f8515f4D3BF8F4181Af76ef"
+        },
+        "Divine Essence": {
+            "dfk": "0x32E2dCD4fB6980a917fc140D0Bc65576FD2E6490"
+        },
+        "Greater Divine Essence": {
+            "dfk": "0x3521f89e02666891f082cFC3E1e881aafb6A71Df"
         }
+
     },
     "Crystal": {
         "Gaias Tears": {
