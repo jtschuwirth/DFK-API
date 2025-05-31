@@ -265,5 +265,11 @@
     },
     "Chaos Crystal": {
         "dfk": "0xC6b00B4005883C1Ff09fa1351B0f49027bCAB71a"
+    },
+    "Divine Essence": {
+        "dfk": "0x9279439C5C6c7931894a599C66C871dBD5919AC3"
+    },
+    "Greater Divine Essence": {
+        "dfk": "0xA564e730326130268a3f525ff00d9f3823218834"
     }
 }
